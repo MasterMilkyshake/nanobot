@@ -2,8 +2,7 @@
 
 A small computational simulator for a therapeutic nanobot. The nanobot starts at an
 injection site and finds the **shortest path** through tissue to a tumor, going
-around anything it can't pass through. This is a starting point for work aligned
-with the Dogra Lab (USC Mann School of Pharmacy).
+around anything it can't pass through.
 
 ## Layout
 
