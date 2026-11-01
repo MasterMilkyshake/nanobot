@@ -1,42 +1,32 @@
 # nanobot
 
-A small computational model of a therapeutic nanobot (nanocarrier). It predicts
-where an IV dose goes (plasma, liver/spleen, tumor, urine) based on the bot's
-design. Built as a starting point for work aligned with the Dogra Lab (USC Mann
-School of Pharmacy), which uses mechanistic modeling to predict how nanomedicines
-are distributed in the body and delivered to tumors.
+A small computational simulator for a therapeutic nanobot. The nanobot starts at an
+injection site and finds the **shortest path** through tissue to a tumor, going
+around anything it can't pass through. This is a starting point for work aligned
+with the Dogra Lab (USC Mann School of Pharmacy).
 
 ## Layout
 
 ```
 src/nanobot/
-  design.py    # Nanobot: design parameters (size, stealth coating)
-  physics.py   # equations that set the rates (diffusion, pore hindrance, permeability)
-  model.py     # 4-compartment ODE model + simulate()
-examples/size_sweep.py
-tests/test_model.py
+  tissue.py      # TissueMap: grid of open / blocked cells, start (S), tumor (T)
+  pathfinder.py  # shortest_path(): A* search
+examples/find_tumor.py
+tests/test_pathfinder.py
 ```
 
-## Model
+## How it works
 
-Amounts are in % injected dose (%ID); time is in hours.
-
-- **Kidney clearance:** GFR × Renkin sieving through a ~4.5 nm glomerular pore.
-- **Liver/spleen (MPS) uptake:** scales with size and surface (stealth) recognition.
-- **Tumor uptake:** pore-theory permeability `P = porosity · H(r/r_pore) · D / L_wall`.
-  `D` is the Stokes–Einstein diffusivity. Tumor values are from Dogra et al. 2020.
-
-The parameter values are illustrative and not fitted to data.
+- The tissue is a 2D grid: `.` open, `#` blocked, `S` injection site, `T` tumor.
+- The nanobot can move in 8 directions. A straight step costs 1 and a diagonal step costs √2.
+  It can't cut diagonally past a blocked corner.
+- A* search uses the octile distance as its heuristic, so the path it returns is
+  guaranteed to be the shortest.
 
 ## Run
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
-.venv/bin/python examples/size_sweep.py
+.venv/bin/python examples/find_tumor.py
 .venv/bin/python -m pytest
 ```
-
-## Reference
-
-Dogra P, et al. *A mathematical model to predict nanomedicine pharmacokinetics and
-tumor delivery.* Comput Struct Biotechnol J. 2020;18:518–531.

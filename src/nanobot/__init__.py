@@ -1,6 +1,6 @@
-"""nanobot: a simple biophysics-based model of a therapeutic nanobot."""
+"""nanobot: find the shortest path for a therapeutic nanobot to reach a tumor."""
 
-from .design import Nanobot
-from .model import Body, simulate
+from .pathfinder import shortest_path
+from .tissue import TissueMap
 
-__all__ = ["Nanobot", "Body", "simulate"]
+__all__ = ["TissueMap", "shortest_path"]

@@ -5,10 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "nanobot"
 version = "0.1.0"
-description = "Simple biophysics-based model of a therapeutic nanobot (Dogra Lab, USC)."
+description = "Shortest-path simulator for a therapeutic nanobot navigating tissue to a tumor (Dogra Lab, USC)."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["numpy>=1.26", "scipy>=1.11"]
+dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
